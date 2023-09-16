@@ -1,0 +1,54 @@
+{
+    "current": 1,
+    "equiped": [
+        {
+            "collection": "weapons",
+            "type": "melee",
+            "name": "rock",
+            "index": 0
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 1
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 2
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 3
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 4
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 5
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 6
+        },
+        {
+            "collection": "none",
+            "type": "none",
+            "name": "none",
+            "index": 7
+        }
+    ],
+    "inventory": []
+}

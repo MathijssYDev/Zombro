@@ -1,0 +1,24 @@
+{
+    "woodblock": {
+        "strength": 50,
+        "build": [
+            {
+                "itemName": "wood",
+                "amount": 2
+            }
+        ],
+        "asset": "woodblock.png",
+        "category": "Buildables"
+    },
+    "stoneblock": {
+        "strength": 125,
+        "build": [
+            {
+                "itemName": "stone",
+                "amount": 2
+            }
+        ],
+        "asset": "stoneblock.png",
+        "category": "Buildables"
+    }
+}
