@@ -1,0 +1,42 @@
+{
+    "weapons": {
+        "melee": {
+            "rock": {
+                "range": 5,
+                "damage": 20,
+                "size": [
+                    20,
+                    20
+                ],
+                "rocksDamage": 10,
+                "treeDamage": 15,
+                "asset": "rock.png"
+            },
+            "battleAxe": {
+                "range": 20,
+                "damage": 80,
+                "size": [
+                    10,
+                    20
+                ],
+                "rocksDamage": 0,
+                "treeDamage": 25,
+                "asset": "battleAxe.png"
+            }
+        }
+    },
+    "resources": {
+        "stone": {
+            "price": 5,
+            "stackable": true,
+            "maxPerStack": 100,
+            "size": [
+                10,
+                10
+            ],
+            "rocksDamage": 0,
+            "treeDamage": 0,
+            "asset": "rockresource.png"
+        }
+    }
+}

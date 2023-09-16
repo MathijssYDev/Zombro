@@ -81,7 +81,7 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
         net = new Net(this);
         try {
 
-            if (net.HandShake("192.168.1.114")) { // handshake with the server to
+            if (net.HandShake("192.168.1.200")) { // handshake with the server to
                 // establish a UDP connection
                 Object serverworldid;
                 Object[][] servers = net.getAllServer(); // ServerID, ServerName, AmountOfPlayers
