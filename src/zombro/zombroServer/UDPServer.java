@@ -117,21 +117,22 @@ public class UDPServer {
             DatagramPacket receivePacket,
             DatagramSocket socket) {
         try {
+            message.unpackInt();
             // ServerWorld serverworld = server.Servers.get(message.unpackInt());
             ServerWorld serverworld = server.Servers.get(0);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             MessagePacker packer = MessagePack.newDefaultPacker(outputStream);
             packer.packString("assetsofserverworld");
-            packer.packArrayHeader(serverworld.assets.size());
+            packer.packString(String.valueOf(serverworld.assets.size()));
             for (int i = 0; i < serverworld.assets.size(); i++) {
                 ArrayList<ArrayList<Integer>> assets = serverworld.assets.get(i);
-                packer.packArrayHeader(assets.size());
+                packer.packString(String.valueOf(assets.size()));
                 for (int i_ = 0; i_ < assets.size(); i_++) {
                     ArrayList<Integer> assets_ = assets.get(i_);
-                    packer.packArrayHeader(assets_.size());
+                    packer.packString(String.valueOf(assets_.size()));
                     for (int i__ = 0; i__ < assets_.size(); i__++) {
-                        packer.packInt(assets_.get(i__));
+                        packer.packString(String.valueOf(assets_.get(i__)));
                     }
                 }
             }

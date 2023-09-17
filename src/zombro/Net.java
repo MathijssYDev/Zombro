@@ -31,7 +31,7 @@ public class Net extends Thread {
 
     public void run() {
         try {
-            byte[] receiveBuffer = new byte[1024];
+            byte[] receiveBuffer = new byte[60000];
 
             while (true) {
                 socket.setSoTimeout(20000);
@@ -46,7 +46,7 @@ public class Net extends Thread {
                 if (header.equals("serverworldupdate")) {
                     ServerWorldUpdate(IP_SERVER, unpacker, receivePacket, socket);
                 }
-                sleep(0);
+                sleep(10);
             }
         } catch (java.net.SocketTimeoutException e) {
             System.out.println("Timeout");
@@ -155,19 +155,23 @@ public class Net extends Thread {
                     receiverAddress, port);
 
             socket.send(responsePacket);
-            byte[] receiveBuffer = new byte[1024];
+            byte[] receiveBuffer = new byte[60000];
             DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
             socket.receive(receivePacket);
             MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(receivePacket.getData());
             String header = unpacker.unpackString();
             if (header.equals("assetsofserverworld")) {
                 ArrayList<ArrayList<ArrayList<Integer>>> assets = new ArrayList<ArrayList<ArrayList<Integer>>>();
-                for (int i = 0; i < unpacker.unpackArrayHeader(); i++) {
+
+                int header1 = Integer.parseInt(unpacker.unpackString());
+                for (int i = 0; i < header1; i++) {
+                    int header2 = Integer.parseInt(unpacker.unpackString());
                     assets.add(new ArrayList<ArrayList<Integer>>());
-                    for (int i_ = 0; i_ < unpacker.unpackArrayHeader(); i_++) {
+                    for (int i_ = 0; i_ < header2; i_++) {
+                        int header3 = Integer.parseInt(unpacker.unpackString());
                         assets.get(i).add(new ArrayList<Integer>());
-                        for (int i__ = 0; i__ < unpacker.unpackArrayHeader(); i__++) {
-                            assets.get(i).get(i_).add(unpacker.unpackInt());
+                        for (int i__ = 0; i__ < header3; i__++) {
+                            assets.get(i).get(i_).add(Integer.parseInt(unpacker.unpackString()));
                         }
                     }
                 }
@@ -175,8 +179,9 @@ public class Net extends Thread {
             }
             return null;
         } catch (Exception e) {
+            e.printStackTrace();
             game.log("Game", "Net", "TIMEOUT",
-                    "(NO RESPONSE) A timeout (2500ms) has occurred while trying to addplayertoserverworld on: "
+                    "(NO RESPONSE) A timeout (2500ms) has occurred while trying to getassetsofserverworld on: "
                             + receiverAddress);
             return null;
         }

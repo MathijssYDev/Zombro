@@ -1,4 +1,4 @@
-package zombro; // https://github.com/OSSpk/Minesweeper-Desktop-Game/blob/master/Code/src/minesweeper/Game.java
+package zombro;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,7 +84,8 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
             if (net.HandShake("localhost")) { // handshake with the server to
                 // establish a UDP connection
                 Object serverworldid;
-                Object[][] servers = net.getAllServer(); // ServerID, ServerName, AmountOfPlayers
+                Object[][] servers = net.getAllServer(); // ServerID, ServerName,
+                // AmountOfPlayers
                 if (servers.length != 0) {
                     serverworldid = (int) servers[0][0];
                     System.out.println("joining pre-existing server world");
@@ -102,6 +103,10 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
                     net.addPlayerToServerWorld((int) serverworldid - 1, "Zombro"); // If
                     // succesful, add a player to
                     // the world
+                    assets.MapAssets = net.GetAssetsOfServerWorld((int) serverworldid - 1);
+                    System.out.println(assets.MapAssets);
+                    this.gui = new UI(this, assets, items);
+                    this.gui.startRenderingGame();
                     net.run(); // start the thread that reads server messages (Player position
                     // updates, block
                     // updates ect)
@@ -118,8 +123,6 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
         }
 
         // ---------------- Initialize UI ----------------
-        this.gui = new UI(this, assets, items);
-        this.gui.startRenderingGame();
     }
 
     @Override
