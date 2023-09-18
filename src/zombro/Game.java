@@ -63,7 +63,7 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
         build.loadblocks(this);
 
         // ---------------- Load Assets ----------------
-        assets = new Assets(this, mapSize);
+        assets = new Assets(this, mapSize, null);
         this.build.blockedPositions = assets.blockedPositionsRandom;
 
         playersLoop.start();
@@ -77,7 +77,6 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
         // menu = new Menu(this);
 
         // ---------------- Initialize NET ----------------
-
         net = new Net(this);
         try {
 
@@ -101,13 +100,17 @@ public class Game implements ActionListener { // MouseListener, ActionListener, 
                     System.out.println("Failed to create Server World");
                 } else {
                     net.addPlayerToServerWorld((int) serverworldid - 1, "Zombro"); // If
+                    net.start();
+
                     // succesful, add a player to
                     // the world
-                    assets.MapAssets = net.GetAssetsOfServerWorld((int) serverworldid - 1);
-                    System.out.println(assets.MapAssets);
+                    do {
+                        assets.MapAssets = net.GetAssetsOfServerWorld((int) serverworldid - 1);
+                        this.build.blockedPositions = assets.blockedPositionsRandom;
+                    } while (assets.MapAssets == null);
                     this.gui = new UI(this, assets, items);
                     this.gui.startRenderingGame();
-                    net.run(); // start the thread that reads server messages (Player position
+                    // start the thread that reads server messages (Player position
                     // updates, block
                     // updates ect)
                     // this.gui = new UI(this, assets, items);

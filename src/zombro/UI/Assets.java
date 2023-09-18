@@ -56,12 +56,7 @@ public class Assets {
     public Assets(Game game, int mapSize, ArrayList<ArrayList<ArrayList<Integer>>> MapAssets) {
         this.game = game;
         this.mapSize = mapSize;
-        if (MapAssets == null) { // If host, or not connected to server? Then generate random Assets following
-                                 // preset settings
-            this.MapAssets = null;
-        } else {
-            this.MapAssets = MapAssets; // If not host or saved assets
-        }
+        this.MapAssets = MapAssets; // If not host or saved assets
         this.loadAssets();
     }
     // -------------- Loading --------------
@@ -295,6 +290,7 @@ public class Assets {
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getAssetsInCamera(int coords[], UI source, int proximity) {
         ArrayList<ArrayList<ArrayList<Integer>>> as = new ArrayList<>();
+
         int width = source.getWidth();
         int height = source.getHeight();
 
@@ -302,7 +298,6 @@ public class Assets {
         int maxWidth = coords[0] + width + proximity;
         int minHeight = coords[1] + -proximity;
         int maxHeight = coords[1] + height + proximity;
-
         for (int l = 0; l < MapAssets.size(); l++) { // Go through layers
             as.add(new ArrayList<ArrayList<Integer>>());
             for (ArrayList<Integer> i : MapAssets.get(l)) {

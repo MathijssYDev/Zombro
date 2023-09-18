@@ -39,8 +39,6 @@ public class Net extends Thread {
                 socket.receive(receivePacket);
 
                 String IP_SERVER = (String) receivePacket.getAddress().getHostAddress();
-
-                String receivedData = new String(receivePacket.getData(), StandardCharsets.UTF_8);
                 MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(receivePacket.getData());
                 String header = unpacker.unpackString();
                 if (header.equals("serverworldupdate")) {
@@ -126,7 +124,7 @@ public class Net extends Thread {
                         receivePacket.getPort());
 
                 socket.send(responsePacket);
-                game.assets.MapAssets = GetAssetsOfServerWorld(serverworldid);
+                // game.assets.MapAssets = GetAssetsOfServerWorld(serverworldid);
             }
             return true;
         } catch (Exception e) {

@@ -51,7 +51,6 @@ public class UI extends JFrame implements KeyListener, MouseListener, MouseMotio
 
     public UI(Game game, Assets assets, Items items) {
         try {
-
             InputStream logo = getClass()
                     .getResourceAsStream("/zombro/resources/Logo.png");
             Image img = ImageIO.read(logo);

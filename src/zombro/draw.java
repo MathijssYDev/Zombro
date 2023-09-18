@@ -33,6 +33,10 @@ public class draw extends Thread {
     public draw(UI gui, Assets assets) {
         this.assets = assets;
         this.gui = gui;
+
+    }
+
+    public void run() {
         status = new Stats(gui.game);
         try {
             long startTime = System.nanoTime();
