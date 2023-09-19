@@ -46,10 +46,12 @@ public class UDPServer {
                 String IP_CLIENT = (String) receivePacket.getAddress().getHostAddress();
 
                 String receivedData = new String(receivePacket.getData(), StandardCharsets.UTF_8);
-                server.log("Server", "UDPServer", "RECIEVED",
-                        "Recieved data from: " + IP_CLIENT
-                                + ", Message: "
-                                + receivedData);
+                if (!receivedData.contains("updateclientplayerorld")) {
+                    server.log("Server", "UDPServer", "RECIEVED",
+                            "Recieved data from: " + IP_CLIENT
+                                    + ", Message: "
+                                    + receivedData);
+                }
                 MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(receivePacket.getData());
                 String header = unpacker.unpackString();
                 if (header.equals("handshake")) {

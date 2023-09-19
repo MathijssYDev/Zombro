@@ -25,6 +25,8 @@ public class Net extends Thread {
 
     Game game;
 
+    int playerid = 0;
+
     public Net(Game game) {
         this.game = game;
     }
@@ -138,6 +140,30 @@ public class Net extends Thread {
         }
     }
 
+    public void disconnectPlayer(int serverworldid) {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            MessagePacker packer = MessagePack.newDefaultPacker(outputStream);
+            packer.packString("disconnectPlayer");
+            packer.packInt(serverworldid);
+            packer.packInt(playerid);
+            packer.close();
+            byte[] bytePacket = outputStream.toByteArray();
+
+            DatagramPacket responsePacket = new DatagramPacket(
+                    bytePacket,
+                    bytePacket.length,
+                    receiverAddress, port);
+
+            socket.send(responsePacket);
+        } catch (Exception e) {
+            e.printStackTrace();
+            game.log("Game", "Net", "TIMEOUT",
+                    "(NO RESPONSE) A timeout (2500ms) has occurred while trying to disconnectPlayer on: "
+                            + receiverAddress);
+        }
+    }
+
     public ArrayList<ArrayList<ArrayList<Integer>>> GetAssetsOfServerWorld(int serverworldid) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -209,7 +235,7 @@ public class Net extends Thread {
             MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(receivePacket.getData());
             String header = unpacker.unpackString();
             if (header.equals("playerid")) {
-                int playerid = unpacker.unpackInt();
+                playerid = unpacker.unpackInt();
                 game.getMainPlayer().id = serverworldid;
                 game.log("Game", "Net", "RECIEVED",
                         "playerid: " + String.valueOf(playerid) + ", server: " + receiverAddress);
